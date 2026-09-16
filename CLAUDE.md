@@ -92,5 +92,6 @@ step ordering), read `Recipe.java` — it's the source of truth, not this file.
 ## Tooling
 
 - CI (`.github/workflows/ci.yml`) runs GitLeaks secret scanning (posts findings as a PR comment) and
-  `./mvnw test` on every push/PR to `main`. JaCoCo coverage is intentionally not wired in yet — add it
-  once the domain test suite is back in place, since an empty suite would fail any coverage gate.
+  `./mvnw test` on every push/PR to `main`. `./mvnw test` generates a JaCoCo coverage report
+  (`jacoco-maven-plugin`, bound to the `test` phase) at `target/site/jacoco/`, uploaded as a CI artifact
+  on every run; there's no enforced minimum-coverage gate yet.
