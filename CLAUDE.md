@@ -58,7 +58,11 @@ new domain code, rather than treating these as a fixed checklist:
   intent (`publish()`, not `setStatus(PUBLISHED)`); identity (not field values) defines equality.
 - **Object creation is explicit about intent.** Static factory methods (e.g. distinguishing "create new"
   from "rehydrate from storage") are preferred over public constructors; reach for a dedicated Factory
-  class only when creation genuinely needs to coordinate multiple aggregates or external state.
+  class only when creation genuinely needs to coordinate multiple aggregates or external state, or when
+  the entity's own constructors are deliberately kept package-private and a Factory is the chosen public
+  entry point for creating it (e.g. `UserFactory` for `User`) — in that case the entity class itself stays
+  public so other layers can still reference and read it, only construction is funneled through the
+  factory.
 - **Aggregates reference each other by ID only**, never by holding another aggregate's object directly —
   that's what keeps each aggregate an independent consistency boundary. Checking whether a referenced ID
   actually exists is an application-layer concern (it needs repository access), not the domain's.
