@@ -1,10 +1,8 @@
 package com.recipes.domain.user;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedConstruction;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mockConstruction;
 
 class UserFactoryTest {
 
@@ -13,32 +11,30 @@ class UserFactoryTest {
     private final UserName userName = new UserName("alice");
 
     @Test
-    void constructorShouldCreateUser() {
+    void createUserShouldBuildUserFromEmailAndUserName() {
         //SUT
         UserFactory factory = new UserFactory();
 
         //Act
-        try (MockedConstruction<User> mockedConstruction = mockConstruction(User.class)) {
-            User result = factory.createUser(email, userName);
+        User result = factory.createUser(email, userName);
 
-            //Assert
-            assertNotNull(result);
-            assertEquals(1, mockedConstruction.constructed().size());
-        }
+        //Assert
+        assertEquals(userId, result.getUserId());
+        assertEquals(email, result.getEmail());
+        assertEquals(userName, result.getUserName());
     }
 
     @Test
-    void constructorShouldRebuildUser() {
+    void createUserShouldRebuildUserFromUserIdAndUserName() {
         //SUT
         UserFactory factory = new UserFactory();
 
         //Act
-        try (MockedConstruction<User> mockedConstruction = mockConstruction(User.class)) {
-            User result = factory.createUser(userId, userName);
+        User result = factory.createUser(userId, userName);
 
-            //Assert
-            assertNotNull(result);
-            assertEquals(1, mockedConstruction.constructed().size());
-        }
+        //Assert
+        assertEquals(userId, result.getUserId());
+        assertEquals(email, result.getEmail());
+        assertEquals(userName, result.getUserName());
     }
 }
