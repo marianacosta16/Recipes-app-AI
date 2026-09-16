@@ -10,7 +10,7 @@ public class UserFactory {
         return new User(email, userName);
     }
 
-    public User createUser (UserId userId, UserName userName) {
+    public User rehydrateUser(UserId userId, UserName userName) {
         return new User(userId, userName);
     }
 }

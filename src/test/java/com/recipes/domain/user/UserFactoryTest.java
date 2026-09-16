@@ -25,12 +25,12 @@ class UserFactoryTest {
     }
 
     @Test
-    void createUserShouldRebuildUserFromUserIdAndUserName() {
+    void rehydrateUserShouldRebuildUserFromUserIdAndUserName() {
         //SUT
         UserFactory factory = new UserFactory();
 
         //Act
-        User result = factory.createUser(userId, userName);
+        User result = factory.rehydrateUser(userId, userName);
 
         //Assert
         assertEquals(userId, result.getUserId());
