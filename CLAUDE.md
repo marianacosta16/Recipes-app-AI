@@ -81,6 +81,13 @@ step ordering), read `Recipe.java` — it's the source of truth, not this file.
 - **Commit messages are a single line** (summary only, plus the `Co-Authored-By` trailer). Don't add a
   body paragraph unless the *why* genuinely isn't obvious from the diff or summary alone (e.g. a
   non-obvious bug fix or a deliberate architectural tradeoff) — don't add one reflexively.
+- **Commit messages use a Conventional Commits prefix**: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`,
+  `chore:` (e.g. `feat: add User aggregate with tests`). Pick the prefix for the dominant change in that
+  commit, not the file type alone.
+- **Commit by topic, not by file type.** Each commit should be one coherent, reviewable change. Don't bundle
+  unrelated concerns into a single commit just because they touched at the same time — e.g. a documentation
+  update (`docs:`) and a test addition/fix (`test:`) for a different change should be separate commits, even
+  if made back-to-back in the same session.
 
 ## Tooling
 
