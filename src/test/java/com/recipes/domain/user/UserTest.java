@@ -97,7 +97,7 @@ class UserTest {
         UserId identity = user.identity();
 
         //Assert
-        assertNotNull(identity);
+        assertEquals(emailDouble, identity.email());
     }
 
     @Test
