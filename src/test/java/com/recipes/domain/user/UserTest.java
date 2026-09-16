@@ -101,7 +101,20 @@ class UserTest {
     }
 
     @Test
-    void sameAsShouldReturnTrueWhenSameEmail() {
+    void sameAsShouldReturnTrueWhenSameState() {
+        //Arrange
+        User user = new User (emailDouble, userNameDouble);
+        User user1 = new User (emailDouble, userNameDouble);
+
+        //Act + SUT
+        boolean result = user.sameAs(user1);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void sameAsShouldReturnFalseWhenUserNameDiffers() {
         //Arrange
         UserName userNameDouble1 = mock(UserName.class);
         User user = new User (emailDouble, userNameDouble);
@@ -111,9 +124,33 @@ class UserTest {
         boolean result = user.sameAs(user1);
 
         //Assert
-        assertTrue(result);
+        assertFalse(result);
     }
 
+    @Test
+    void sameAsShouldReturnFalseWhenEmailDiffers() {
+        //Arrange
+        Email emailDouble1 = mock(Email.class);
+        User user = new User (emailDouble, userNameDouble);
+        User user1 = new User (emailDouble1, userNameDouble);
 
+        //Act + SUT
+        boolean result = user.sameAs(user1);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void sameAsShouldReturnFalseWhenComparedToNonUser() {
+        //Arrange
+        User user = new User (emailDouble, userNameDouble);
+
+        //Act + SUT
+        boolean result = user.sameAs("not a user");
+
+        //Assert
+        assertFalse(result);
+    }
 
 }

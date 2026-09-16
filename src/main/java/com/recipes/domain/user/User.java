@@ -2,6 +2,8 @@ package com.recipes.domain.user;
 
 import com.recipes.domain.shared.AggregateRoot;
 
+import java.util.Objects;
+
 public class User implements AggregateRoot<UserId> {
 
     private final UserId userId;
@@ -39,8 +41,14 @@ public class User implements AggregateRoot<UserId> {
 
     @Override
     public boolean sameAs(Object object) {
-        if (!(object instanceof User user)) return false;
-        return userId.equals(user.userId);
+        if (object instanceof User) {
+            User other = (User) object;
+
+            if (Objects.equals(this.userId, other.userId) &&
+                    Objects.equals(this.userName, other.userName))
+                return true;
+        }
+        return false;
     }
 
     @Override
