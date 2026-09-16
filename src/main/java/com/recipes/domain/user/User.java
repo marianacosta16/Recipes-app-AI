@@ -2,31 +2,24 @@ package com.recipes.domain.user;
 
 import com.recipes.domain.shared.AggregateRoot;
 
-import java.util.Objects;
-
-public class User implements AggregateRoot {
+public class User implements AggregateRoot<UserId> {
 
     private final UserId userId;
-    private final Email email;
     private UserName userName;
 
-    User(UserId userId, Email email, UserName userName) {
+    User(UserId userId, UserName userName) {
         if (userId == null)
-            throw new UserException("UserIs is required");
-
-        if (email == null)
-            throw new UserException("E-mail is required");
+            throw new UserException("UserId is required");
 
         if (userName == null)
             throw new UserException("UserName is required");
 
         this.userId = userId;
-        this.email = email;
         this.userName = userName;
     }
 
     User(Email email, UserName userName) {
-        this(new UserId(email), email, userName);
+        this(new UserId(email), userName);
     }
 
     public UserId getUserId() {
@@ -34,7 +27,7 @@ public class User implements AggregateRoot {
     }
 
     public Email getEmail() {
-        return email;
+        return userId.email();
     }
 
     public UserName getUserName() {

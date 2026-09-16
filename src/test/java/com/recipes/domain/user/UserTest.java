@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserTest {
@@ -32,7 +33,7 @@ class UserTest {
     @Test
     void constructorShouldThrowExceptionWhenEmailIsNull() {
         //Arrange + Act + Assert + SUT
-        assertThrows(UserException.class, () -> new User(null, userNameDouble));
+        assertThrows(UserException.class, () -> new User((Email) null, userNameDouble));
     }
 
     @Test
@@ -43,8 +44,11 @@ class UserTest {
 
     @Test
     void constructorShouldSucceedWithProvidedUserId() {
+        //Arrange
+        when(userIdDouble.email()).thenReturn(emailDouble);
+
         //Act + SUT
-        User user = new User (userIdDouble, emailDouble, userNameDouble);
+        User user = new User (userIdDouble, userNameDouble);
 
         //Assert
         assertEquals(userIdDouble, user.getUserId());
@@ -54,8 +58,8 @@ class UserTest {
 
     @Test
     void constructorShouldThrowExceptionWhenUserIdIsNull() {
-        //Arrange
-        assertThrows(UserException.class, () -> new User(null, emailDouble, userNameDouble));
+        //Arrange + Act + Assert + SUT
+        assertThrows(UserException.class, () -> new User((UserId) null, userNameDouble));
     }
 
     @Test
