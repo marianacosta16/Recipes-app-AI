@@ -4,6 +4,10 @@ import com.recipes.domain.shared.AggregateRoot;
 
 import java.util.Objects;
 
+/**
+ * A registered user, identified by {@link UserId}. Equality is identity-based ({@code userId}
+ * only); construction is restricted to {@link UserFactory}.
+ */
 public class User implements AggregateRoot<UserId> {
 
     private final UserId userId;
