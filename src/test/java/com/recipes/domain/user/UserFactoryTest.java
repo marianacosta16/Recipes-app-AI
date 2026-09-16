@@ -1,25 +1,16 @@
 package com.recipes.domain.user;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.MockedConstruction;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mockConstruction;
 
-@ExtendWith(MockitoExtension.class)
 class UserFactoryTest {
 
-    @Mock
-    private Email emailDouble;
-
-    @Mock
-    private UserId userIdDouble;
-
-    @Mock
-    private UserName userNameDouble;
+    private final Email email = new Email("alice@example.com");
+    private final UserId userId = new UserId(email);
+    private final UserName userName = new UserName("alice");
 
     @Test
     void constructorShouldCreateUser() {
@@ -28,7 +19,7 @@ class UserFactoryTest {
 
         //Act
         try (MockedConstruction<User> mockedConstruction = mockConstruction(User.class)) {
-            User result = factory.createUser(emailDouble, userNameDouble);
+            User result = factory.createUser(email, userName);
 
             //Assert
             assertNotNull(result);
@@ -43,7 +34,7 @@ class UserFactoryTest {
 
         //Act
         try (MockedConstruction<User> mockedConstruction = mockConstruction(User.class)) {
-            User result = factory.createUser(userIdDouble, userNameDouble);
+            User result = factory.createUser(userId, userName);
 
             //Assert
             assertNotNull(result);

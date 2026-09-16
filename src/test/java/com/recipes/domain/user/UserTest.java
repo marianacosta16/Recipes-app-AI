@@ -1,78 +1,67 @@
 package com.recipes.domain.user;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class UserTest {
-    @Mock
-    private Email emailDouble;
 
-    @Mock
-    private UserId userIdDouble;
-
-    @Mock
-    private UserName userNameDouble;
+    private final Email email = new Email("alice@example.com");
+    private final UserName userName = new UserName("alice");
 
     @Test
     void constructorShouldSucceedForValidUser() {
         //Act + SUT
-        User user = new User(emailDouble, userNameDouble);
+        User user = new User(email, userName);
 
         //Assert
-        assertEquals(userNameDouble, user.getUserName());
-        assertEquals(emailDouble, user.getEmail());
+        assertEquals(userName, user.getUserName());
+        assertEquals(email, user.getEmail());
     }
 
     @Test
     void constructorShouldThrowExceptionWhenEmailIsNull() {
         //Arrange + Act + Assert + SUT
-        assertThrows(UserException.class, () -> new User((Email) null, userNameDouble));
+        assertThrows(UserException.class, () -> new User((Email) null, userName));
     }
 
     @Test
     void constructorShouldThrowExceptionWhenUserNameIsNull() {
         //Arrange + Act + Assert + SUT
-        assertThrows(UserException.class, () -> new User(emailDouble, null));
+        assertThrows(UserException.class, () -> new User(email, null));
     }
 
     @Test
     void constructorShouldSucceedWithProvidedUserId() {
         //Arrange
-        when(userIdDouble.email()).thenReturn(emailDouble);
+        UserId userId = new UserId(email);
 
         //Act + SUT
-        User user = new User (userIdDouble, userNameDouble);
+        User user = new User(userId, userName);
 
         //Assert
-        assertEquals(userIdDouble, user.getUserId());
-        assertEquals(emailDouble, user.getEmail());
-        assertEquals(userNameDouble, user.getUserName());
+        assertEquals(userId, user.getUserId());
+        assertEquals(email, user.getEmail());
+        assertEquals(userName, user.getUserName());
     }
 
     @Test
     void constructorShouldThrowExceptionWhenUserIdIsNull() {
         //Arrange + Act + Assert + SUT
-        assertThrows(UserException.class, () -> new User((UserId) null, userNameDouble));
+        assertThrows(UserException.class, () -> new User((UserId) null, userName));
     }
 
     @Test
     void equalsAnsHashCode() {
         //Arrange
-        Email emailDouble1 = mock(Email.class);
-        UserName userNameDouble1 = mock(UserName.class);
+        Email email1 = new Email("bob@example.com");
+        UserName userName1 = new UserName("bob");
         String u3 = "user123";
 
         //Act + SUT
-        User user = new User(emailDouble, userNameDouble);
-        User user1 = new User(emailDouble, userNameDouble1);
-        User user2 = new User(emailDouble1, userNameDouble1);
+        User user = new User(email, userName);
+        User user1 = new User(email, userName1);
+        User user2 = new User(email1, userName1);
 
         //Assert
         assertEquals(user, user);
@@ -91,20 +80,20 @@ class UserTest {
     @Test
     void identityShouldReturnUserIdBasedOnEmail() {
         //Arrange
-        User user = new User (emailDouble, userNameDouble);
+        User user = new User(email, userName);
 
         //Act + SUT
         UserId identity = user.identity();
 
         //Assert
-        assertEquals(emailDouble, identity.email());
+        assertEquals(email, identity.email());
     }
 
     @Test
     void sameAsShouldReturnTrueWhenSameState() {
         //Arrange
-        User user = new User (emailDouble, userNameDouble);
-        User user1 = new User (emailDouble, userNameDouble);
+        User user = new User(email, userName);
+        User user1 = new User(email, userName);
 
         //Act + SUT
         boolean result = user.sameAs(user1);
@@ -116,9 +105,9 @@ class UserTest {
     @Test
     void sameAsShouldReturnFalseWhenUserNameDiffers() {
         //Arrange
-        UserName userNameDouble1 = mock(UserName.class);
-        User user = new User (emailDouble, userNameDouble);
-        User user1 = new User (emailDouble, userNameDouble1);
+        UserName userName1 = new UserName("bob");
+        User user = new User(email, userName);
+        User user1 = new User(email, userName1);
 
         //Act + SUT
         boolean result = user.sameAs(user1);
@@ -130,9 +119,9 @@ class UserTest {
     @Test
     void sameAsShouldReturnFalseWhenEmailDiffers() {
         //Arrange
-        Email emailDouble1 = mock(Email.class);
-        User user = new User (emailDouble, userNameDouble);
-        User user1 = new User (emailDouble1, userNameDouble);
+        Email email1 = new Email("bob@example.com");
+        User user = new User(email, userName);
+        User user1 = new User(email1, userName);
 
         //Act + SUT
         boolean result = user.sameAs(user1);
@@ -144,7 +133,7 @@ class UserTest {
     @Test
     void sameAsShouldReturnFalseWhenComparedToNonUser() {
         //Arrange
-        User user = new User (emailDouble, userNameDouble);
+        User user = new User(email, userName);
 
         //Act + SUT
         boolean result = user.sameAs("not a user");
