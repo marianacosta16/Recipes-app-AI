@@ -35,9 +35,10 @@ domain          zero framework dependencies (no Spring, no jakarta.*, no Lombok)
 application     depends only on domain. Use cases that orchestrate the domain and call repository
                 ports. Cross-aggregate existence checks (e.g. "does this IngredientId exist?") belong
                 here, not in the domain, since they require repository access.
-infrastructure  depends on domain + application + frameworks. JPA entities are separate classes from
-                domain entities (never annotate a domain class with @Entity); adapters implement the
-                domain's repository interfaces; mappers convert between JPA and domain objects.
+infrastructure  depends on domain + application + frameworks. Persistence is hand-written SQL via JDBC
+                (JdbcTemplate), not JPA/Hibernate — no @Entity classes; adapters implement the domain's
+                repository interfaces; mappers convert between ResultSet rows and domain objects. Schema
+                changes are versioned Flyway migrations under src/main/resources/db/migration.
 web             depends only on application. Controllers call use cases; never repositories or domain
                 internals directly.
 ```
