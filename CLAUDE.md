@@ -36,9 +36,9 @@ application     depends only on domain. Use cases that orchestrate the domain an
                 ports. Cross-aggregate existence checks (e.g. "does this IngredientId exist?") belong
                 here, not in the domain, since they require repository access.
 infrastructure  depends on domain + application + frameworks. Persistence is hand-written SQL via JDBC
-                (JdbcTemplate), not JPA/Hibernate — no @Entity classes; adapters implement the domain's
-                repository interfaces; mappers convert between ResultSet rows and domain objects. Schema
-                changes are versioned Flyway migrations under src/main/resources/db/migration.
+                (JdbcTemplate); adapters implement the domain's repository interfaces; mappers convert
+                between ResultSet rows and domain objects. Schema changes are versioned Flyway migrations
+                under src/main/resources/db/migration.
 web             depends only on application. Controllers call use cases; never repositories or domain
                 internals directly.
 ```
