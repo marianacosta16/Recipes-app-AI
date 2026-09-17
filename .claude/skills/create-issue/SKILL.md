@@ -21,7 +21,9 @@ before creating it.
 
 ## 2. Check for duplicates
 
-`gh issue list --repo mffcosta16/Recipes-app-AI --state all --search "<keywords from the request>"`
+`gh issue list --state all --search "<keywords from the request>"` (run from inside the repo so `gh`
+infers the repo from `origin` — never hardcode an owner/repo; verify with `git remote -v` first if
+unsure).
 
 If potential duplicates are found, show them to the user with title, number, and state. Let the user
 decide whether to proceed — don't block, just inform.
@@ -50,16 +52,17 @@ want to tweak wording, add criteria, or adjust scope.
 ## 5. Create the issue
 
 ```
-gh issue create --repo mffcosta16/Recipes-app-AI \
+gh issue create \
   --title "<title>" \
   --label "<label>" \
   --body "<body>"
 ```
 
+(Run from inside the repo, no `--repo` flag, so `gh` targets `origin` — never hardcode an owner/repo.)
+
 **Label guidance**: default to `enhancement` for new use cases/features. Use `bug` only if it's clearly a
 bug (something that used to work and doesn't, or behavior contradicting an existing issue's acceptance
-criteria). Check `gh label list --repo mffcosta16/Recipes-app-AI` first; don't invent new labels without
-asking.
+criteria). Check `gh label list` first; don't invent new labels without asking.
 
 After creation, share the issue URL with the user, and remind them: this issue should be referenced in
 the commit(s) that implement it, e.g. `Refs #<number>` or `Closes #<number>`.
